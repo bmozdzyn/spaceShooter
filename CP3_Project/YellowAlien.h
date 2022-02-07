@@ -2,29 +2,21 @@
 #include "Entity.h"
 #include <iostream>
 class YellowAlien :
-    public Entity
+	public Entity
 {
-	int hp;
-	int hpMax;
-	int damage;
 	int points;
-
-	//for shooting
-	float movementSpeed;
-	float attackCooldown;
-	float attackCooldownMax;
 
 	void initVariables();
 
+	sf::Time time;
 	float timeAlive{ 0.f };
+	int counter;
 
+	void updateAttack();
 public:
 	YellowAlien(const sf::Texture& text, sf::Vector2f position);
 
-	bool canAttack();
 
-	void updateAttack();
-
-	void update(float deltatime) override;
+	void update(float deltatime);
 };
 

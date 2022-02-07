@@ -2,29 +2,25 @@
 
 void YellowAlien::initVariables()
 {
-	hp = 0;
-	hpMax = 20;
-	damage = 3;
+	hpMax = 30;
+	hp = hpMax;
+	damage = 30;
 	points = 15;
+
+	attackCooldown = 0.f;
+	attackCooldownMax = 2.f;
 }
 
 YellowAlien::YellowAlien(const sf::Texture& text, sf::Vector2f position)
-	: Entity(text, position, sf::IntRect{1,52,16,16})
+	: Entity(text, position, sf::IntRect{ 1,52,16,16 })
 {
 	initVariables();
-	sprite.setScale(3,3);
+	sprite.setScale(3, 3);
+
+	timeAlive = (3.0 / 2.0) * 3.141592653589793238;
+
 }
 
-bool YellowAlien::canAttack()
-{
-	if (attackCooldown >= attackCooldownMax)
-	{
-		attackCooldown = 0.f;
-		return true;
-	}
-
-	return false;
-}
 
 void YellowAlien::updateAttack()
 {
@@ -34,8 +30,15 @@ void YellowAlien::updateAttack()
 
 void YellowAlien::update(float deltatime)
 {
+	//reseting timeAlive every 2s
 	timeAlive += deltatime;
-	sprite.move(100 * sin(timeAlive * timeAlive) * deltatime, 0);
+
+	sprite.move(25 * sin(timeAlive) * deltatime, 0);
+
+	static const double pi = 3.141592653589793238;
+	if (timeAlive > 2.0* pi)
+		timeAlive -= 2.0* pi;
+
 
 	updateAttack();
 }

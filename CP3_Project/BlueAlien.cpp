@@ -2,10 +2,13 @@
 
 void BlueAlien::initVariables()
 {
-	hp = 0;
 	hpMax = 10;
-	damage = 1;
+	hp = hpMax;
+	damage = 10;
 	points = 5;
+
+	attackCooldown = 0.f;
+	attackCooldownMax = 1.5f;
 }
 
 BlueAlien::BlueAlien(const sf::Texture& text, sf::Vector2f position)
@@ -13,17 +16,6 @@ BlueAlien::BlueAlien(const sf::Texture& text, sf::Vector2f position)
 {
 	initVariables();
 	sprite.setScale(3, 3);
-}
-
-bool BlueAlien::canAttack()
-{
-	if (attackCooldown >= attackCooldownMax)
-	{
-		attackCooldown = 0.f;
-		return true;
-	}
-
-	return false;
 }
 
 void BlueAlien::updateAttack()
@@ -34,8 +26,16 @@ void BlueAlien::updateAttack()
 
 void BlueAlien::update(float deltatime)
 {
+	//reseting timeAlive every 2s
 	timeAlive += deltatime;
-	sprite.move(100 * sin(timeAlive * timeAlive) * deltatime, 0);
+
+	sprite.move(100 * sin(2*timeAlive) * deltatime, 0);
+
+	static const double pi = 3.141592653589793238;
+	if (timeAlive > 2.0 * pi)
+		timeAlive -= 2.0 * pi;
+
+
 
 	updateAttack();
 }

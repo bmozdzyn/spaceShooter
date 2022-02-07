@@ -25,3 +25,29 @@ sf::Vector2f Entity::getPosition()
 {
 	return sprite.getPosition();
 }
+
+void Entity::receiveDamage(int damage)
+{
+	hp -= damage;
+}
+
+bool Entity::canAttack()
+{
+	if (attackCooldown >= attackCooldownMax)
+	{
+		attackCooldown = 0.f;
+		return true;
+	}
+
+	return false;
+}
+
+int Entity::dealDamage()
+{
+	return damage;
+}
+
+bool Entity::isAlive()
+{
+	return hp>0;
+}

@@ -1,57 +1,27 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <time.h>
-#include "Player.h"
-#include "Bullet.h"
-#include "BlueAlien.h"
-#include "RedAlien.h"
-#include "YellowAlien.h"
+#include "mainMenuState.h"
 
+class Game {
 
-class Game
-{
-private:
-	sf::RenderWindow *window;
-	Player* player;
-
-	std::vector<Bullet> playerBullets;
-	std::vector<Bullet> blueAlienBullets;
-	std::vector<Bullet> redAlienBullets;
-	std::vector<Bullet> yellowAlienBullets;
-
-
-	std::vector<BlueAlien*> blueAlien;
-	std::vector<RedAlien*> redAlien;
-	std::vector<YellowAlien*> yellowAlien;
+	std::stack<State::ptr> states;
+	sf::RenderWindow window;
 
 	int windowWidth;
 	int windowHeight;
 
-	void initVariables();
 	void initWindow();
-	void initPlayer();
-	void initEnemies();
+	void initVariables();
+	void initStates();
 
-	sf::Texture all, player_text;
-
-	sf::Time elapsedTime;
-	sf::Time time;
-	sf::Clock clock;
-
-public:
-	Game();
-	~Game();
-
-	void updateEvents();
-	void updateInput();
-	void updateEnemyBullet();
-	void updatePlayerBullet();
-	void updateCombat();
 	void update();
+	void updateSFMLEvents();
+
 	void render();
 
-	void run();
+public:
 
+	Game();
+	~Game();
+	void run();
 };
 

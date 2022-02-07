@@ -2,13 +2,16 @@
 
 void Player::initVariables()
 {
+	hpMax = 10000;
+	hp = hpMax;
+	damage = 10;
 	movementSpeed = 8;
-	attackCooldownMax = 4.f;
+	attackCooldownMax = 1.5f;
 	attackCooldown = attackCooldownMax; //first attack will be instant
 }
 
 Player::Player(const sf::Texture& text, sf::Vector2f windowSize)
-	: Entity(text, sf::Vector2f(0,0), sf::IntRect(0,0,360,450))
+	: Entity(text, sf::Vector2f(0, 0), sf::IntRect(0, 0, 360, 450))
 {
 	initVariables();
 	sprite.setScale(0.12, 0.12);
@@ -24,22 +27,20 @@ void Player::move(const float dirX, const float dirY)
 	sprite.move(movementSpeed * dirX, movementSpeed * dirY);
 }
 
-
-bool Player::canAttack()
+int Player::currentHP()
 {
-	if (attackCooldown >= attackCooldownMax)
-	{
-		attackCooldown = 0.f;
-		return true;
-	}
-
-	return false;
+	return hp;
 }
 
 void Player::updateAttack()
 {
-	if(attackCooldown < attackCooldownMax)
-		attackCooldown += 0.5f;
+	if (attackCooldown < attackCooldownMax)
+		attackCooldown += 0.25f;
+}
+
+void Player::updateHP(int damage)
+{
+	hp -= damage;
 }
 
 void Player::update(float deltatime)
